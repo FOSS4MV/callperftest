@@ -1,0 +1,3 @@
+SUBROUTINE CALL.PERF.SUB(A)
+   R = ((A*A) + A) / A
+RETURN

@@ -1,0 +1,68 @@
+* Simple performance test
+
+PROMPT ''
+
+CRT
+CRT 'Number of tests: ':
+INPUT MAX.TESTS
+IF MAX.TESTS = '' THEN STOP
+
+CRT
+CRT 'Number of calcs: ':
+INPUT MAX.CALCS
+IF MAX.CALCS = '' THEN STOP
+
+CRT
+CRT 'System() number for CPU time in ms [D3 is 9]: ':
+INPUT SYS.CODE
+IF SYS.CODE = '' THEN STOP
+
+CRT
+CRT 'In-line Test'
+TM.LIST = ''
+FOR I = 1 TO MAX.TESTS
+   START.TIME = SYSTEM(SYS.CODE)
+   FOR A = 1 TO MAX.CALCS
+      R = ((A*A) + A) / A
+   NEXT A
+   TM = SYSTEM(SYS.CODE) - START.TIME
+   TM.LIST<-1> = TM
+   CRT '   Time = ':TM:' ms'
+NEXT I
+CRT '   Avg. = ':SUM(TM.LIST) / MAX.TESTS
+
+CRT
+CRT 'GOSUB Test'
+TM.LIST = ''
+FOR I = 1 TO MAX.TESTS
+   START.TIME = SYSTEM(SYS.CODE)
+   FOR A = 1 TO MAX.CALCS
+      GOSUB CALC
+   NEXT A
+   TM = SYSTEM(SYS.CODE) - START.TIME
+   TM.LIST<-1> = TM
+   CRT '   Time = ':TM:' ms'
+NEXT I
+CRT '   Avg. = ':SUM(TM.LIST) / MAX.TESTS
+
+CRT
+CRT 'CALL() Test'
+TM.LIST = ''
+FOR I = 1 TO MAX.TESTS
+   START.TIME = SYSTEM(SYS.CODE)
+   FOR A = 1 TO MAX.CALCS
+      CALL CALL.PERF.SUB(A)
+   NEXT A
+   TM = SYSTEM(SYS.CODE) - START.TIME
+   TM.LIST<-1> = TM
+   CRT '   Time = ':TM:' ms'
+NEXT I
+CRT '   Avg. = ':SUM(TM.LIST) / MAX.TESTS
+
+CRT
+CRT 'DONE'
+STOP
+
+CALC:
+   R = ((A*A) + A) / A
+RETURN
