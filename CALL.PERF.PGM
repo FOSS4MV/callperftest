@@ -10,7 +10,7 @@ INPUT MAX.TESTS
 IF MAX.TESTS = '' THEN STOP
 
 CRT
-CRT 'Number of calcs: ':
+CRT 'Number of calcs/test: ':
 INPUT MAX.CALCS
 IF MAX.CALCS = '' THEN STOP
 
